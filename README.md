@@ -1,5 +1,6 @@
 # Welcome to app-android-module_name!
 
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=afoxplus-app-android-invitation)
 ![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_publish.yml/badge.svg?branch=master) ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-invitation&metric=alert_status)
 
 module_name is an library for afoxplus.
