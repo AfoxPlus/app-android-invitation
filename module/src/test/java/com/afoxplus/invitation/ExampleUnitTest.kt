@@ -1,4 +1,4 @@
-package com.afoxplus.module
+package com.afoxplus.invitation
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
