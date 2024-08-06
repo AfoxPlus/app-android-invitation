@@ -1,10 +1,10 @@
-# Welcome to app-android-module_name!
+# Welcome to app-android-invitation!
 
 ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-invitation&metric=alert_status)
 ![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_build.yml/badge.svg?branch=master)
 ![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_deploy.yml/badge.svg?branch=master)
 
-module_name is an library for afoxplus.
+Invitation is an library for afoxplus.
 
 ## Setup
 
@@ -27,7 +27,7 @@ git submodule update
 
 ```kotlin  
 dependencies {  
-implementation("com.afoxplus.android:module_name:$LAST_VERSION")
+implementation("com.afoxplus.android:invitation:$LAST_VERSION")
 }  
 ```  
 

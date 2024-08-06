@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invitation_banner_title">Disfruta de tus invitaciones</string>
+    <string name="invitation_banner_description">Consulta tu invitación y confirma tu asistencia.</string>
+    <string name="invitation_banner_button_title">Probar</string>
+
+    <string name="invitation_screen_empty_state_title">¿Tienes una invitación nueva?</string>
+    <string name="invitation_screen_empty_state_description">Ingresa el código</string>
+    <string name="invitation_screen_button_title">Agregar código</string>
+    <string name="invitation_screen_top_app_bar_title">YaListo</string>
+    <string name="invitation_screen_top_app_bar_description">Mis Invitaciones</string>
+
+    <string name="invitation_new_screen_button_confirm_title">Confirmar</string>
+    <string name="invitation_new_screen_top_app_bar_description">Nueva Invitación</string>
+    <string name="invitation_barcode_description">Escanee su código de barras en la entrada.</string>
+
+    <string name="invitation_bottom_sheet_title">Agregar código de invitación</string>
+    <string name="invitation_bottom_sheet_button_title">Consultar</string>
+    <string name="invitation_bottom_sheet_input_code_placeholder">Código</string>
+
+</resources>
