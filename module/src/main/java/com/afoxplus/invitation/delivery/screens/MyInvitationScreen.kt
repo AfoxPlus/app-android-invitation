@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.afoxplus.invitation.R
+import com.afoxplus.invitation.delivery.components.bottom_sheet.SearchCodeBottomSheet
 import com.afoxplus.invitation.delivery.components.items.InvitationItem
 import com.afoxplus.invitation.delivery.models.InvitationItemModel
 import com.afoxplus.uikit.designsystem.atoms.UIKitButtonPrimaryLarge
@@ -19,9 +22,13 @@ import com.afoxplus.uikit.designsystem.atoms.UIKitText
 import com.afoxplus.uikit.designsystem.foundations.UIKitColorTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 import com.afoxplus.uikit.designsystem.molecules.UIKitTopBar
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MyInvitationScreen(onBackPressed: () -> Unit) {
+    val modalBottomSheetState = rememberModalBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             UIKitTopBar(
@@ -37,13 +44,20 @@ internal fun MyInvitationScreen(onBackPressed: () -> Unit) {
                     .padding(paddingValues)
             ) {
                 DataListState()
+                SearchCodeBottomSheet(modalBottomSheetState = modalBottomSheetState,
+                    onDismiss = {
+                    })
             }
         },
         bottomBar = {
             UIKitButtonPrimaryLarge(
                 modifier = Modifier.padding(UIKitTheme.spacing.spacing16),
                 text = stringResource(id = R.string.invitation_screen_button_title),
-                onClick = {})
+                onClick = {
+                    coroutineScope.launch {
+                        modalBottomSheetState.show()
+                    }
+                })
         }
     )
 }
@@ -73,9 +87,11 @@ internal fun EmptyListState() {
 
 @Composable
 internal fun DataListState() {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = UIKitTheme.spacing.spacing12)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = UIKitTheme.spacing.spacing12)
+    ) {
         val model = InvitationItemModel(
             id = "",
             title = "Mis 18 Años: Victor Pacherres",

@@ -14,4 +14,8 @@
     <string name="invitation_new_screen_top_app_bar_description">Nueva Invitación</string>
     <string name="invitation_barcode_description">Escanee su código de barras en la entrada.</string>
 
+    <string name="invitation_bottom_sheet_title">Agregar código de invitación</string>
+    <string name="invitation_bottom_sheet_button_title">Consultar</string>
+    <string name="invitation_bottom_sheet_input_code_placeholder">Código</string>
+
 </resources>
