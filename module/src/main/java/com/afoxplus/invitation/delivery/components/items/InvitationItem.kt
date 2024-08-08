@@ -67,7 +67,7 @@ internal fun InvitationItem(modifier: Modifier = Modifier, model: InvitationItem
 
             Box(modifier = Modifier.padding(top = UIKitTheme.spacing.spacing12)) {
                 UIKitText(
-                    text = model.assistants,
+                    text = model.participants,
                     style = UIKitTypographyTheme.paragraph02,
                     color = UIKitColorTheme.secondaryColor
                 )
@@ -91,7 +91,7 @@ internal fun PreviewItem() {
                 title = "Mis 18 Años: Victor Pacherres",
                 address = "Gelora Bung Karno Stadium, Jakarta",
                 date = "31 Septiembre 2024",
-                assistants = "50K+ Participantes"
+                participants = "50K+ Participantes"
             )
             InvitationItem(model = model)
         }

@@ -26,7 +26,7 @@ import com.afoxplus.uikit.designsystem.foundations.UIKitTypographyTheme
 @Composable
 internal fun SearchCodeBottomSheet(
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(),
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit = {}
 ) {
 
     if (modalBottomSheetState.isVisible) {

@@ -17,6 +17,7 @@ internal class InvitationNetworkDataSource @Inject constructor(private val invit
         var invitationsResult: ListState<Invitation> = ListLoading()
         try {
             val response = invitationApiNetwork.fetch()
+            if (response.isSuccessful.not()) invitationsResult = ListEmptyData()
             response.map {
                 val result = it.payload.toDomain()
                 invitationsResult = if (result.isEmpty()) ListEmptyData()

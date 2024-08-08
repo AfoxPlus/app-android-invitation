@@ -5,5 +5,5 @@ internal data class InvitationItemModel(
     val title: String,
     val address: String,
     val date: String,
-    val assistants: String
+    val participants: String
 )

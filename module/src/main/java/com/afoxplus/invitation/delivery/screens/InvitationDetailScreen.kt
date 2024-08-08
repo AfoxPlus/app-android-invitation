@@ -39,10 +39,11 @@ internal fun InvitationDetailScreen(onBackPressed: () -> Unit) {
             }
         },
         bottomBar = {
-            UIKitButtonPrimaryLarge(
-                modifier = Modifier.padding(UIKitTheme.spacing.spacing16),
-                text = stringResource(id = R.string.invitation_new_screen_button_confirm_title),
-                onClick = {})
+            Box(modifier = Modifier.padding(UIKitTheme.spacing.spacing16)) {
+                UIKitButtonPrimaryLarge(
+                    text = stringResource(id = R.string.invitation_new_screen_button_confirm_title),
+                    onClick = {})
+            }
         }
     )
 }
