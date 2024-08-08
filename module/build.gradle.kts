@@ -131,13 +131,19 @@ dependencies {
 
     // Business Dependencies
     implementation(Deps.UI.uikit)
+
+    //Network Dependencies
     implementation(Deps.Arch.network)
+    implementation(Deps.Arch.retrofit2)
+    implementation(Deps.Arch.loggingInterceptor)
+    implementation(Deps.Arch.gson)
 
     // Test
     testImplementation(Deps.Test.jUnit)
     testImplementation(Deps.Test.testCore)
     testImplementation(Deps.Test.truth)
     testImplementation(Deps.Test.mockitoKotlin)
+    testImplementation(Deps.Test.kotlinCoroutine)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
 }
