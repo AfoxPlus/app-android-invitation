@@ -2,7 +2,7 @@
 
 ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-invitation&metric=alert_status)
 ![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_build.yml/badge.svg?branch=master)
-![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_deploy.yml/badge.svg?branch=master)
+![GithubActions](https://github.com/afoxplus/app-android-invitation/actions/workflows/android_deploy.yml/badge.svg)
 
 Invitation is an library for afoxplus.
 

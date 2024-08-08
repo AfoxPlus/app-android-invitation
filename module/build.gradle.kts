@@ -144,6 +144,7 @@ dependencies {
     testImplementation(Deps.Test.truth)
     testImplementation(Deps.Test.mockitoKotlin)
     testImplementation(Deps.Test.kotlinCoroutine)
+    testImplementation(Deps.Test.mockitoInline)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
 }
