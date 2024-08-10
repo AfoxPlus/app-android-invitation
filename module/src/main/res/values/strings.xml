@@ -13,6 +13,8 @@
     <string name="invitation_screen_error_state_description">Vuelve a intentarlo en unos minutos</string>
 
     <string name="invitation_new_screen_button_confirm_title">Confirmar</string>
+    <string name="invitation_new_screen_button_carta_title">Carta</string>
+
     <string name="invitation_new_screen_top_app_bar_description">Nueva Invitación</string>
     <string name="invitation_barcode_description">Escanee su código de barras en la entrada.</string>
 

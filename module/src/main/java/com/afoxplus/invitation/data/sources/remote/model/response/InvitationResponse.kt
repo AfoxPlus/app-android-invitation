@@ -13,6 +13,7 @@ internal data class InvitationResponse(
     @SerializedName("time") val time: String,
     @SerializedName("gate") val gate: String,
     @SerializedName("table") val table: String,
+    @SerializedName("restaurant_id") val restaurantId: String? = null,
     @SerializedName("ulrBarcode") val ulrBarcode: String,
     @SerializedName("participants") val participants: String
 )

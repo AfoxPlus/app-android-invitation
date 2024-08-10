@@ -32,6 +32,7 @@ internal fun InvitationDetailScreen(
 ) {
     val invitationState by viewModel.invitation.collectAsState()
     val buttonEnable by viewModel.buttonEnable.collectAsState()
+    val buttonName by viewModel.buttonName.collectAsState()
 
     LaunchedEffect(key1 = Unit) { viewModel.findInvitation(code, useLocal) }
 
@@ -68,8 +69,8 @@ internal fun InvitationDetailScreen(
             Box(modifier = Modifier.padding(UIKitTheme.spacing.spacing16)) {
                 UIKitButtonPrimaryLarge(
                     enabled = buttonEnable,
-                    text = stringResource(id = R.string.invitation_new_screen_button_confirm_title),
-                    onClick = { viewModel.confirmInvitation() })
+                    text = stringResource(id = buttonName),
+                    onClick = { viewModel.onClickButton() })
             }
         }
     )

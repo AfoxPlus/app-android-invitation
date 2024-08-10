@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
 import com.afoxplus.invitation.delivery.screens.MyInvitationScreen
 import com.afoxplus.invitation.delivery.viewmodels.MyInvitationViewModel
 import com.afoxplus.uikit.activities.UIKitBaseActivity
@@ -45,7 +46,8 @@ internal class MyInvitationsActivity : UIKitBaseActivity() {
                             InvitationDetailActivity.getIntentInvitationDetail(
                                 context = context,
                                 code = it.code,
-                                useLocal = true
+                                useLocal = true,
+                                StrategyInvitationDetail.CARTA
                             )
                         )
                     }
@@ -59,8 +61,9 @@ internal class MyInvitationsActivity : UIKitBaseActivity() {
                                 launcher.launch(
                                     InvitationDetailActivity.getIntentInvitationDetail(
                                         context = context,
-                                        code =  nav.invitation.code,
-                                        useLocal = false
+                                        code = nav.invitation.code,
+                                        useLocal = false,
+                                        StrategyInvitationDetail.CONFIRM
                                     )
                                 )
                             }
