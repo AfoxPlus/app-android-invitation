@@ -15,7 +15,7 @@ internal fun InvitationResponse.toDomain(): Invitation {
         time = this.time,
         gate = this.gate,
         table = this.table,
-        ulrBarcode = this.ulrBarcode,
+        urlBarcode = this.ulrBarcode,
         participants = this.participants
     )
 }

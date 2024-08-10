@@ -102,7 +102,7 @@ class MyInvitationViewModelTest : BaseViewModelTests() {
         time = "08:pm",
         gate = "Five",
         table = "T01",
-        ulrBarcode = "link",
+        urlBarcode = "link",
         participants = "50k"
     )
 

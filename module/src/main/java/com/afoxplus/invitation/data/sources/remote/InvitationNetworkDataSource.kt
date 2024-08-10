@@ -2,7 +2,9 @@ package com.afoxplus.invitation.data.sources.remote
 
 import com.afoxplus.invitation.cross.mapper.toDomain
 import com.afoxplus.invitation.data.sources.remote.api.InvitationApiNetwork
+import com.afoxplus.invitation.data.sources.remote.model.request.InvitationRequest
 import com.afoxplus.invitation.domain.entities.Invitation
+import com.afoxplus.network.extensions.body
 import com.afoxplus.network.extensions.map
 import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
@@ -12,17 +14,18 @@ import com.afoxplus.uikit.views.status.ListSuccess
 import javax.inject.Inject
 
 internal class InvitationNetworkDataSource @Inject constructor(private val invitationApiNetwork: InvitationApiNetwork) {
-
     suspend fun fetch(): ListState<Invitation> {
         var invitationsResult: ListState<Invitation> = ListLoading()
         try {
-            val response = invitationApiNetwork.fetch()
-            if (response.isSuccessful.not()) invitationsResult = ListEmptyData()
-            response.map {
-                val result = it.payload.toDomain()
-                invitationsResult = if (result.isEmpty()) ListEmptyData()
-                else ListSuccess(data = result)
-            }
+            invitationApiNetwork.fetch().body(
+                onSuccess = {
+                    val result = it.payload.toDomain()
+                    invitationsResult = if (result.isEmpty()) ListEmptyData()
+                    else ListSuccess(data = result)
+                },
+                onFailed = {
+                    invitationsResult = ListEmptyData()
+                })
         } catch (ex: Exception) {
             invitationsResult = ListError(ex)
         }
@@ -40,5 +43,17 @@ internal class InvitationNetworkDataSource @Inject constructor(private val invit
             ex.printStackTrace()
         }
         return invitationResult
+    }
+
+    suspend fun setGuestUUID(invitationID: String): Boolean {
+        var result = false
+        try {
+            invitationApiNetwork.setGuestUUID(InvitationRequest(invitationID)).body(
+                onSuccess = { result = it.payload },
+                onFailed = { result = false })
+        } catch (ex: Exception) {
+            result = false
+        }
+        return result
     }
 }

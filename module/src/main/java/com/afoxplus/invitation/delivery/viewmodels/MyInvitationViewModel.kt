@@ -8,7 +8,9 @@ import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import com.afoxplus.uikit.views.status.ListLoading
 import com.afoxplus.uikit.views.status.ListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,12 +25,13 @@ internal class MyInvitationViewModel @Inject constructor(
     private val mInvitationsState: MutableStateFlow<ListState<Invitation>> by lazy {
         MutableStateFlow(ListLoading())
     }
-    private val mInvitationState: MutableStateFlow<UIModelState<Invitation>> by lazy {
-        MutableStateFlow(UIModelState.Loading())
-    }
+
+    private val mNavigationState: MutableSharedFlow<Navigation> by lazy { MutableSharedFlow() }
+    private val mInvitationState: MutableSharedFlow<UIModelState<Invitation>> by lazy { MutableSharedFlow() }
 
     val invitationsState = mInvitationsState.asStateFlow()
-    val invitationState = mInvitationState.asStateFlow()
+    val navigation = mNavigationState.asSharedFlow()
+    val invitationState = mInvitationState.asSharedFlow()
 
     fun fetch() {
         viewModelScope.launch(coroutineDispatcher.getIODispatcher()) {
@@ -36,12 +39,35 @@ internal class MyInvitationViewModel @Inject constructor(
         }
     }
 
-    fun findByCode(code: String) {
+    fun findByCode(code: String, useLocalCache: Boolean = false) {
         viewModelScope.launch(coroutineDispatcher.getIODispatcher()) {
-            val result = repository.findByCode(code)
-            mInvitationState.value =
-                result?.let { UIModelState.Success(it) } ?: UIModelState.NoData()
+            loadingState()
+            repository.findByCode(code, useLocalCache)?.let { result ->
+                mInvitationState.emit(UIModelState.Success(result))
+            } ?: emptyState()
         }
+    }
+
+    fun navigateToDetail(invitation: Invitation) {
+        viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+            mNavigationState.emit(Navigation.ToInvitationDetail(invitation))
+        }
+    }
+
+    private fun emptyState() {
+        viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+            mInvitationState.emit(UIModelState.NoData())
+        }
+    }
+
+    private fun loadingState() {
+        viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+            mInvitationState.emit(UIModelState.Loading())
+        }
+    }
+
+    sealed interface Navigation {
+        data class ToInvitationDetail(val invitation: Invitation) : Navigation
     }
 
     sealed interface UIModelState<E> {

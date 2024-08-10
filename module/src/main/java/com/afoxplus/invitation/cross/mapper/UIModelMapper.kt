@@ -5,7 +5,7 @@ import com.afoxplus.invitation.domain.entities.Invitation
 
 internal fun Invitation.toUIModel(): InvitationItemModel {
     return InvitationItemModel(
-        id = this.id,
+        code = this.code,
         title = this.title,
         address = this.address,
         date = this.date,

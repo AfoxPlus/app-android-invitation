@@ -15,6 +15,6 @@ internal data class Invitation(
     val time: String,
     val gate: String,
     val table: String,
-    val ulrBarcode: String,
+    val urlBarcode: String,
     val participants: String
 ) : Parcelable

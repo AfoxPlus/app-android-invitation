@@ -12,11 +12,14 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +28,7 @@ import com.afoxplus.invitation.R
 import com.afoxplus.invitation.cross.mapper.toUIModel
 import com.afoxplus.invitation.delivery.components.bottom_sheet.SearchCodeBottomSheet
 import com.afoxplus.invitation.delivery.components.items.InvitationItem
+import com.afoxplus.invitation.delivery.components.items.InvitationItemModelClicked
 import com.afoxplus.invitation.delivery.models.InvitationItemModel
 import com.afoxplus.invitation.delivery.viewmodels.MyInvitationViewModel
 import com.afoxplus.invitation.domain.entities.Invitation
@@ -38,19 +42,23 @@ import com.afoxplus.uikit.views.status.ListEmptyData
 import com.afoxplus.uikit.views.status.ListError
 import com.afoxplus.uikit.views.status.ListLoading
 import com.afoxplus.uikit.views.status.ListSuccess
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MyInvitationScreen(
+    modalBottomSheetState: SheetState,
     viewModel: MyInvitationViewModel,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onItemInvitationClicked: InvitationItemModelClicked,
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
     val invitationsState by viewModel.invitationsState.collectAsState()
+    val enableButtonFind = remember { mutableStateOf(true) }
 
     LaunchedEffect(key1 = Unit) { viewModel.fetch() }
+    HandleInvitationState(enableButtonFind, viewModel)
 
     Scaffold(
         topBar = {
@@ -69,13 +77,19 @@ internal fun MyInvitationScreen(
                 when (invitationsState) {
                     is ListLoading -> LoadingState()
                     is ListSuccess -> DataListState(
-                        invitations = (invitationsState as ListSuccess<Invitation>).data.toUIModel()
+                        invitations = (invitationsState as ListSuccess<Invitation>).data.toUIModel(),
+                        onClick = onItemInvitationClicked
                     )
 
                     is ListEmptyData -> EmptyListState()
                     is ListError -> ErrorListState()
                 }
-                SearchCodeBottomSheet(modalBottomSheetState = modalBottomSheetState)
+                SearchCodeBottomSheet(
+                    modalBottomSheetState = modalBottomSheetState,
+                    enabledButton = enableButtonFind.value,
+                    onFind = { code ->
+                        viewModel.findByCode(code)
+                    })
             }
         },
         bottomBar = {
@@ -83,13 +97,37 @@ internal fun MyInvitationScreen(
                 UIKitButtonPrimaryLarge(
                     text = stringResource(id = R.string.invitation_screen_button_title),
                     onClick = {
-                        coroutineScope.launch {
-                            modalBottomSheetState.show()
-                        }
+                        enableButtonFind.value = true
+                        coroutineScope.launch { modalBottomSheetState.show() }
                     })
             }
         }
     )
+}
+
+
+@Composable
+internal fun HandleInvitationState(
+    enableButtonFind: MutableState<Boolean>,
+    viewModel: MyInvitationViewModel
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.invitationState.collectLatest { state ->
+            when (state) {
+                is MyInvitationViewModel.UIModelState.Loading -> {
+                    enableButtonFind.value = false
+                }
+
+                is MyInvitationViewModel.UIModelState.NoData -> {
+                    enableButtonFind.value = true
+                }
+
+                is MyInvitationViewModel.UIModelState.Success -> {
+                    viewModel.navigateToDetail(state.data)
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -150,7 +188,8 @@ internal fun LoadingState(modifier: Modifier = Modifier) {
 internal fun DataListState(
     modifier: Modifier = Modifier,
     invitations: List<InvitationItemModel>,
-    listState: LazyListState = rememberLazyListState(),
+    onClick: InvitationItemModelClicked,
+    listState: LazyListState = rememberLazyListState()
 ) {
     LazyColumn(
         state = listState,
@@ -159,7 +198,7 @@ internal fun DataListState(
         modifier = modifier.fillMaxSize()
     ) {
         itemsIndexed(invitations) { _, model ->
-            InvitationItem(model = model)
+            InvitationItem(model = model, onClick = onClick)
         }
     }
 }

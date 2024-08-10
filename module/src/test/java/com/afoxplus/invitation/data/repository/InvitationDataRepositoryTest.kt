@@ -1,5 +1,6 @@
 package com.afoxplus.invitation.data.repository
 
+import com.afoxplus.invitation.data.sources.local.cache.InvitationLocalCache
 import com.afoxplus.invitation.data.sources.remote.InvitationNetworkDataSource
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -9,11 +10,13 @@ import org.mockito.kotlin.verify
 
 class InvitationDataRepositoryTest {
     private val invitationNetworkDataSource: InvitationNetworkDataSource = mock()
+    private val invitationLocalCache: InvitationLocalCache = mock()
     private lateinit var invitationDataRepository: InvitationDataRepository
 
     @Before
     fun setup() {
-        invitationDataRepository = InvitationDataRepository(invitationNetworkDataSource)
+        invitationDataRepository =
+            InvitationDataRepository(invitationNetworkDataSource, invitationLocalCache)
     }
 
     @Test
