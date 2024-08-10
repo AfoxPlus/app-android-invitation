@@ -2,6 +2,7 @@ package com.afoxplus.invitation.data.sources.remote.api
 
 import com.afoxplus.invitation.data.sources.remote.model.request.InvitationRequest
 import com.afoxplus.invitation.data.sources.remote.model.response.InvitationResponse
+import com.afoxplus.network.annotations.EndpointInfo
 import com.afoxplus.network.annotations.ServiceClient
 import com.afoxplus.network.api.UrlProvider
 import com.afoxplus.network.response.BaseResponse
@@ -19,11 +20,14 @@ internal interface InvitationApiNetwork {
     }
 
     @GET(PATH_INVITATION)
+    @EndpointInfo(type = UrlProvider.Type.API_INVITATION)
     suspend fun fetch(): Response<BaseResponse<List<InvitationResponse>>>
 
     @GET("$PATH_INVITATION/{code}")
+    @EndpointInfo(type = UrlProvider.Type.API_INVITATION)
     suspend fun find(@Path("code") code: String): Response<BaseResponse<InvitationResponse>>
 
     @PUT(PATH_INVITATION)
+    @EndpointInfo(type = UrlProvider.Type.API_INVITATION)
     suspend fun setGuestUUID(@Body request: InvitationRequest): Response<BaseResponse<Boolean>>
 }

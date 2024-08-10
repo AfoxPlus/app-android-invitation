@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
 import com.afoxplus.invitation.delivery.screens.InvitationDetailScreen
 import com.afoxplus.invitation.delivery.viewmodels.InvitationDetailViewModel
 import com.afoxplus.uikit.activities.UIKitBaseActivity
@@ -15,6 +16,7 @@ internal class InvitationDetailActivity : UIKitBaseActivity() {
     private val viewModel: InvitationDetailViewModel by viewModels()
 
     override fun setMainView() {
+        setStrategyScreen()
         setContent {
             UIKitTheme {
                 intent.getStringExtra(INTENT_CODE_EXTRA)?.let { code ->
@@ -30,6 +32,14 @@ internal class InvitationDetailActivity : UIKitBaseActivity() {
         }
     }
 
+    private fun setStrategyScreen() {
+        val strategy = intent.getStringExtra(INTENT_STRATEGY_EXTRA)
+            ?.let { StrategyInvitationDetail.valueOf(it) }
+            ?: StrategyInvitationDetail.CARTA
+        viewModel.setStrategyScreen(strategy)
+    }
+
+
     private fun finishSuccess() {
         setResult(RESULT_OK)
         finish()
@@ -42,13 +52,20 @@ internal class InvitationDetailActivity : UIKitBaseActivity() {
     companion object {
         private const val INTENT_CODE_EXTRA = "intent_code_extra"
         private const val INTENT_USE_LOCAL_EXTRA = "intent_use_local_extra"
-        fun getIntentInvitationDetail(context: Context, code: String, useLocal: Boolean): Intent {
+        private const val INTENT_STRATEGY_EXTRA = "intent_strategy_extra"
+        fun getIntentInvitationDetail(
+            context: Context,
+            code: String,
+            useLocal: Boolean,
+            strategy: StrategyInvitationDetail
+        ): Intent {
             return Intent(
                 context,
                 InvitationDetailActivity::class.java
             ).apply {
                 putExtra(INTENT_CODE_EXTRA, code)
                 putExtra(INTENT_USE_LOCAL_EXTRA, useLocal)
+                putExtra(INTENT_STRATEGY_EXTRA, strategy.name)
             }
         }
     }

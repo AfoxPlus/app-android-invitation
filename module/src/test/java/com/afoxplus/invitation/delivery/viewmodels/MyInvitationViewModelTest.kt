@@ -68,7 +68,7 @@ class MyInvitationViewModelTest : BaseViewModelTests() {
                 myInvitationViewModel.invitationState.toList(resultList)
             }
 
-            myInvitationViewModel.findByCode(code,false)
+            myInvitationViewModel.findByCode(code, false)
 
             assertEquals(MyInvitationViewModel.UIModelState.Success(invitation), resultList.first())
             job.cancel()
@@ -104,6 +104,7 @@ class MyInvitationViewModelTest : BaseViewModelTests() {
         gate = "Five",
         table = "T01",
         urlBarcode = "link",
+        restaurantId = "asd123456",
         participants = "50k"
     )
 

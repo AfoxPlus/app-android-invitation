@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 internal data class Invitation(
     val id: String,
+    val restaurantId: String,
     val urlBanner: String,
     val code: String,
     val title: String,
