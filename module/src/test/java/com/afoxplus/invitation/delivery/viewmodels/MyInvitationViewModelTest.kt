@@ -61,15 +61,16 @@ class MyInvitationViewModelTest : BaseViewModelTests() {
     fun `should return invitation when execute method findByCode`() {
         runTest {
             val code = "asd123"
-            whenever(repository.findByCode(code)).thenReturn(invitation)
+            whenever(repository.findByCode(code, false)).thenReturn(invitation)
+
             val resultList = mutableListOf<MyInvitationViewModel.UIModelState<Invitation>>()
             val job = launch(testDispatcher) {
                 myInvitationViewModel.invitationState.toList(resultList)
             }
 
-            myInvitationViewModel.findByCode(code)
+            myInvitationViewModel.findByCode(code,false)
 
-            assertEquals(MyInvitationViewModel.UIModelState.Success(invitation), resultList.last())
+            assertEquals(MyInvitationViewModel.UIModelState.Success(invitation), resultList.first())
             job.cancel()
         }
     }
