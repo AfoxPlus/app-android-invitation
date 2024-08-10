@@ -9,6 +9,8 @@
     <string name="invitation_screen_button_title">Agregar código</string>
     <string name="invitation_screen_top_app_bar_title">YaListo</string>
     <string name="invitation_screen_top_app_bar_description">Mis Invitaciones</string>
+    <string name="invitation_screen_error_state_title">Ha ocurrido un problema</string>
+    <string name="invitation_screen_error_state_description">Vuelve a intentarlo en unos minutos</string>
 
     <string name="invitation_new_screen_button_confirm_title">Confirmar</string>
     <string name="invitation_new_screen_top_app_bar_description">Nueva Invitación</string>

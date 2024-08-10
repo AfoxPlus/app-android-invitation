@@ -1,9 +1,7 @@
 package com.afoxplus.invitation.delivery.components.ticket
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,31 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.afoxplus.invitation.R
+import com.afoxplus.invitation.domain.entities.Invitation
 import com.afoxplus.uikit.designsystem.atoms.UIKitText
 import com.afoxplus.uikit.designsystem.foundations.UIKitColorTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTypographyTheme
 
-@Preview(showBackground = true)
 @Composable
-internal fun PreviewInvitationTicket() {
-    UIKitTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(UIKitTheme.spacing.spacing16)
-        ) {
-            InvitationTicket(modifier = Modifier.height(IntrinsicSize.Min))
-        }
-    }
-}
-
-@Composable
-internal fun InvitationTicket(modifier: Modifier = Modifier) {
+internal fun InvitationTicket(
+    invitation: Invitation,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = UIKitColorTheme.gray100),
@@ -59,26 +46,26 @@ internal fun InvitationTicket(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .height(165.dp)
                     .padding(top = UIKitTheme.spacing.spacing24),
-                model = "https://images.ctfassets.net/wg1141eg84ns/1f5qGdqXTry030imgJwTLL/997dc6e625b3de6b90c2c63b0658148e/Coldplay.jpg",
-                contentDescription = "Coldplay"
+                model = invitation.urlBanner,
+                contentDescription = "Invitation Banner"
             )
             Spacer(modifier = Modifier.height(UIKitTheme.spacing.spacing16))
             UIKitText(
-                text = "Mis 18 Años: Victor Pacherres",
+                text = invitation.title,
                 style = UIKitTypographyTheme.header04SemiBold,
                 color = UIKitColorTheme.secondaryColor
             )
             UIKitText(
-                text = "31 Sep 2024 ~ Avenida arenales 1241, Trujillo",
+                text = "${invitation.date} ~ ${invitation.address}",
                 style = UIKitTypographyTheme.paragraph02,
                 color = UIKitColorTheme.gray500
             )
             Spacer(modifier = Modifier.height(UIKitTheme.spacing.spacing22))
             HorizontalDivider(color = UIKitColorTheme.gray300)
-            TicketData()
+            TicketData(invitation)
             Spacer(modifier = Modifier.height(UIKitTheme.spacing.spacing22))
             HorizontalDivider(color = UIKitColorTheme.gray300)
-            TicketBarcode(urlBarcode = "https://pngimg.com/uploads/barcode/barcode_PNG4.png")
+            TicketBarcode(urlBarcode = invitation.urlBarcode)
         }
     }
 }
@@ -103,7 +90,7 @@ internal fun TicketDataItem(modifier: Modifier = Modifier, label: String, value:
 }
 
 @Composable
-internal fun TicketData(modifier: Modifier = Modifier) {
+internal fun TicketData(invitation: Invitation, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(UIKitTheme.spacing.spacing16),
         modifier = modifier
@@ -116,36 +103,36 @@ internal fun TicketData(modifier: Modifier = Modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
             TicketDataItem(
                 modifier = Modifier.weight(weightColumnOne),
-                label = "Nombres", value = "Valentin Mendoza"
+                label = "Nombres", value = invitation.guest
             )
 
             TicketDataItem(
                 modifier = Modifier.weight(wightColumnTwo),
-                label = "Código", value = "AF12456"
+                label = "Código", value = invitation.code
             )
         }
 
         Row(modifier = Modifier.fillMaxWidth()) {
             TicketDataItem(
                 modifier = Modifier.weight(weightColumnOne),
-                label = "Fecha", value = "21 Sep 2024"
+                label = "Fecha", value = invitation.date
             )
 
             TicketDataItem(
                 modifier = Modifier.weight(wightColumnTwo),
-                label = "Hora", value = "07:00 PM"
+                label = "Hora", value = invitation.time
             )
         }
 
         Row(modifier = Modifier.fillMaxWidth()) {
             TicketDataItem(
                 modifier = Modifier.weight(weightColumnOne),
-                label = "Puerta", value = "Yellow"
+                label = "Puerta", value = invitation.gate
             )
 
             TicketDataItem(
                 modifier = Modifier.weight(wightColumnTwo),
-                label = "Mesa", value = "West B"
+                label = "Mesa", value = invitation.table
             )
         }
     }

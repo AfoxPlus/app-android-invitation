@@ -11,9 +11,15 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import com.afoxplus.invitation.R
 import com.afoxplus.uikit.designsystem.atoms.UIKitButtonPrimaryLarge
 import com.afoxplus.uikit.designsystem.atoms.UIKitText
@@ -26,8 +32,12 @@ import com.afoxplus.uikit.designsystem.foundations.UIKitTypographyTheme
 @Composable
 internal fun SearchCodeBottomSheet(
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(),
-    onDismiss: () -> Unit
+    enabledButton: Boolean,
+    onFind: (code: String) -> Unit,
+    onDismiss: () -> Unit = {}
 ) {
+    var codeText by remember { mutableStateOf(TextFieldValue("")) }
+    val focusManager = LocalFocusManager.current
 
     if (modalBottomSheetState.isVisible) {
         ModalBottomSheet(
@@ -60,13 +70,16 @@ internal fun SearchCodeBottomSheet(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = UIKitTheme.spacing.spacing12),
-                        placeholder = stringResource(id = R.string.invitation_bottom_sheet_input_code_placeholder)
-                    ) {
-                    }
+                        placeholder = stringResource(id = R.string.invitation_bottom_sheet_input_code_placeholder),
+                        onValueChange = { codeText = it }
+                    )
+
                     UIKitButtonPrimaryLarge(
+                        enabled = enabledButton,
                         text = stringResource(id = R.string.invitation_bottom_sheet_button_title),
                         onClick = {
-
+                            focusManager.clearFocus()
+                            onFind(codeText.text)
                         }
                     )
                 }
