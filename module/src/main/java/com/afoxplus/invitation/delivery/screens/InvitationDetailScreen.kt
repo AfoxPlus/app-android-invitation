@@ -28,7 +28,8 @@ internal fun InvitationDetailScreen(
     code: String,
     useLocal: Boolean = false,
     onConfirmSuccess: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onNoData: () -> Unit
 ) {
     val invitationState by viewModel.invitation.collectAsState()
     val buttonEnable by viewModel.buttonEnable.collectAsState()
@@ -54,7 +55,7 @@ internal fun InvitationDetailScreen(
             ) {
                 when (invitationState) {
                     is InvitationDetailViewModel.UIModelState.Loading -> viewModel.disableButton()
-                    is InvitationDetailViewModel.UIModelState.NoData -> viewModel.disableButton()
+                    is InvitationDetailViewModel.UIModelState.NoData -> onNoData()
                     is InvitationDetailViewModel.UIModelState.Success -> {
                         viewModel.enableButton()
                         InvitationTicket(

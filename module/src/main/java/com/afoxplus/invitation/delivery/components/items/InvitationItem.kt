@@ -29,6 +29,7 @@ internal fun InvitationItem(
     onClick: InvitationItemModelClicked
 ) {
     Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = UIKitTheme.spacing.spacing04),
         modifier = modifier.clickable { onClick(model) },
         colors = CardDefaults.cardColors(containerColor = UIKitColorTheme.gray100),
         shape = RoundedCornerShape(UIKitTheme.spacing.spacing08)

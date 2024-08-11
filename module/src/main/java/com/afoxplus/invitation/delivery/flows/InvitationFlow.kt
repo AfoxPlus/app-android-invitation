@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.afoxplus.invitation.delivery.activities.InvitationDetailActivity
 import com.afoxplus.invitation.delivery.activities.MyInvitationsActivity
+import com.afoxplus.invitation.delivery.activities.ScanInvitationTicketActivity
 import com.afoxplus.invitation.delivery.components.banner.InvitationHomeBanner
 import java.util.Locale
 import javax.inject.Inject
@@ -25,6 +26,10 @@ class InvitationFlow @Inject constructor() {
 
     fun goToAddedInvitationActivity(activity: Activity) {
         activity.startActivity(Intent(activity, InvitationDetailActivity::class.java))
+    }
+
+    fun goToScanInvitationTicketActivity(activity: Activity, code: String) {
+        activity.startActivity(ScanInvitationTicketActivity.getIntentScanInvitationTicket(activity, code))
     }
 
     fun goToGoogleMaps(activity: Activity) {

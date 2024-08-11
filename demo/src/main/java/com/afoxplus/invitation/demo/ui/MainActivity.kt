@@ -64,6 +64,12 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             UIKitButtonOutlineLarge(
+                                text = "Scan Invitation"
+                            ) {
+                                invitationFlow.goToScanInvitationTicketActivity(this@MainActivity, "AF12456")
+                            }
+
+                            UIKitButtonOutlineLarge(
                                 text = "Go gps"
                             ) {
                                 invitationFlow.goToGoogleMaps(this@MainActivity)
