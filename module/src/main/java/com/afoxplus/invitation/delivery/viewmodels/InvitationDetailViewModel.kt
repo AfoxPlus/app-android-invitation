@@ -3,11 +3,11 @@ package com.afoxplus.invitation.delivery.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.afoxplus.invitation.R
-import com.afoxplus.invitation.delivery.flows.GoToRestaurantFromInvitation
-import com.afoxplus.invitation.delivery.models.InvitationModelEvent
+import com.afoxplus.invitation.delivery.events.GotoRestaurantEvent
 import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
 import com.afoxplus.invitation.domain.entities.Invitation
 import com.afoxplus.invitation.domain.repository.InvitationRepository
+import com.afoxplus.uikit.bus.UIKitEventBusWrapper
 import com.afoxplus.uikit.di.UIKitCoroutineDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class InvitationDetailViewModel @Inject constructor(
     private val repository: InvitationRepository,
-    private val goToRestaurantFromInvitation: GoToRestaurantFromInvitation,
+    private val eventBus: UIKitEventBusWrapper,
     private val coroutineDispatcher: UIKitCoroutineDispatcher
 ) : ViewModel() {
 
@@ -73,13 +73,15 @@ internal class InvitationDetailViewModel @Inject constructor(
     }
 
     private fun goToRestaurant() {
-        val invitation = (mInvitation.value as UIModelState.Success).data
-        goToRestaurantFromInvitation(
-            InvitationModelEvent(
-                tableId = invitation.table,
-                restaurantId = invitation.restaurantId
+        viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
+            val invitation = (mInvitation.value as UIModelState.Success).data
+            eventBus.send(
+                GotoRestaurantEvent(
+                    tableId = invitation.table,
+                    restaurantId = invitation.restaurantId
+                )
             )
-        )
+        }
     }
 
     fun enableButton() {
