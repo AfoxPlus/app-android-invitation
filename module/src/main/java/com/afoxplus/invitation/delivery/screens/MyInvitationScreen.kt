@@ -88,7 +88,7 @@ internal fun MyInvitationScreen(
                     modalBottomSheetState = modalBottomSheetState,
                     enabledButton = enableButtonFind.value,
                     onFind = { code ->
-                        viewModel.findByCode(code)
+                        viewModel.findByCode(code, useLocalCache = false)
                     })
             }
         },
@@ -194,7 +194,10 @@ internal fun DataListState(
     LazyColumn(
         state = listState,
         verticalArrangement = Arrangement.spacedBy(UIKitTheme.spacing.spacing10),
-        contentPadding = PaddingValues(horizontal = UIKitTheme.spacing.spacing16),
+        contentPadding = PaddingValues(
+            horizontal = UIKitTheme.spacing.spacing16,
+            vertical = UIKitTheme.spacing.spacing04
+        ),
         modifier = modifier.fillMaxSize()
     ) {
         itemsIndexed(invitations) { _, model ->

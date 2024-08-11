@@ -1,6 +1,5 @@
 package com.afoxplus.invitation.delivery.activities
 
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,7 +30,6 @@ internal class MyInvitationsActivity : UIKitBaseActivity() {
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.StartActivityForResult()
                 ) { result ->
-                    Log.d("LOG_VALE", "result: $result")
                     if (result.resultCode == RESULT_OK) {
                         myInvitationViewModel.fetch()
                     }
@@ -62,7 +60,7 @@ internal class MyInvitationsActivity : UIKitBaseActivity() {
                                     InvitationDetailActivity.getIntentInvitationDetail(
                                         context = context,
                                         code = nav.invitation.code,
-                                        useLocal = false,
+                                        useLocal = true,
                                         StrategyInvitationDetail.CONFIRM
                                     )
                                 )

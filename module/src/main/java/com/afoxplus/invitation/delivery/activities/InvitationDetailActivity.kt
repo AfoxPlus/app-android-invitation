@@ -25,6 +25,7 @@ internal class InvitationDetailActivity : UIKitBaseActivity() {
                         code = code,
                         useLocal = intent.getBooleanExtra(INTENT_USE_LOCAL_EXTRA, false),
                         onBackPressed = { onBackPressedDispatcher.onBackPressed() },
+                        onNoData = { finish() },
                         onConfirmSuccess = { finishSuccess() }
                     )
                 }

@@ -13,6 +13,12 @@ internal class InvitationLocalCache @Inject constructor() {
         myInvitations.addAll(invitations)
     }
 
+    fun saveInvitation(invitation: Invitation) {
+        if (myInvitations.any { item -> item.id == invitation.id }.not()) {
+            myInvitations.add(invitation)
+        }
+    }
+
     fun getInvitations(): List<Invitation> = myInvitations
 
     fun getInvitation(code: String): Invitation? =

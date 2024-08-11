@@ -9,5 +9,9 @@
         <activity
             android:name=".delivery.activities.InvitationDetailActivity"
             android:theme="@style/UIKit.NoActionBar.Light" />
+
+        <activity
+            android:name=".delivery.activities.ScanInvitationTicketActivity"
+            android:theme="@style/UIKit.NoActionBar.Light" />
     </application>
 </manifest>

@@ -24,7 +24,10 @@ internal class InvitationDataRepository @Inject constructor(
     override suspend fun findByCode(code: String, useLocalCache: Boolean): Invitation? {
         return if (useLocalCache) {
             invitationLocalCache.getInvitation(code)
-        } else invitationNetworkDataSource.findByCode(code)
+        } else {
+            invitationNetworkDataSource.findByCode(code)
+                ?.also { invitationLocalCache.saveInvitation(it) }
+        }
     }
 
     override suspend fun setGuestUUID(invitationID: String): Boolean {
