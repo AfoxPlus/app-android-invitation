@@ -1,8 +1,6 @@
 package com.afoxplus.invitation.demo.di
 
 import com.afoxplus.demo_config.delivery.flow.StartDemoFlow
-import com.afoxplus.invitation.delivery.flows.GoToRestaurantFromInvitation
-import com.afoxplus.invitation.demo.global.GoToRestaurantFromInvitationImpl
 import com.afoxplus.invitation.demo.global.SampleStartDemoFlow
 import dagger.Binds
 import dagger.Module
@@ -15,7 +13,4 @@ interface SampleDemoModule {
 
     @Binds
     fun bindStartDemoFlow(impl: SampleStartDemoFlow): StartDemoFlow
-
-    @Binds
-    fun bindGoToRestaurantFromInvitation(impl: GoToRestaurantFromInvitationImpl): GoToRestaurantFromInvitation
 }
