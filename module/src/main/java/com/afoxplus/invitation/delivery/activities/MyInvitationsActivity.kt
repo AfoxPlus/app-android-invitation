@@ -1,5 +1,7 @@
 package com.afoxplus.invitation.delivery.activities
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,18 +13,18 @@ import androidx.compose.ui.platform.LocalContext
 import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
 import com.afoxplus.invitation.delivery.screens.MyInvitationScreen
 import com.afoxplus.invitation.delivery.viewmodels.MyInvitationViewModel
-import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-internal class MyInvitationsActivity : UIKitBaseActivity() {
+internal class MyInvitationsActivity : ComponentActivity() {
 
     private val myInvitationViewModel: MyInvitationViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
-    override fun setMainView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContent {
             UIKitTheme {
                 val modalBottomSheetState = rememberModalBottomSheetState()
@@ -70,10 +72,6 @@ internal class MyInvitationsActivity : UIKitBaseActivity() {
                 }
             }
         }
-    }
-
-    override fun setUpView() {
-
     }
 
 }
