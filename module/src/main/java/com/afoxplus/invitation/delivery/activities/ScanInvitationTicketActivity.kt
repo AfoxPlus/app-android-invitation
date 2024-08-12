@@ -2,6 +2,8 @@ package com.afoxplus.invitation.delivery.activities
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,19 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.afoxplus.invitation.delivery.flows.InvitationFlow
 import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
-import com.afoxplus.uikit.activities.UIKitBaseActivity
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 import com.afoxplus.uikit.designsystem.molecules.UIKitLoading
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-internal class ScanInvitationTicketActivity : UIKitBaseActivity() {
+internal class ScanInvitationTicketActivity : ComponentActivity() {
 
     @Inject
     lateinit var invitationFlow: InvitationFlow
 
-    override fun setMainView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContent {
             val context = LocalContext.current
             val launcher = rememberLauncherForActivityResult(
@@ -57,11 +59,6 @@ internal class ScanInvitationTicketActivity : UIKitBaseActivity() {
             }
         }
     }
-
-    override fun setUpView() {
-
-    }
-
 
     companion object {
         private const val INTENT_CODE_EXTRA = "intent_code_extra"
