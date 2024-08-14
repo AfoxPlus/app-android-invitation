@@ -98,19 +98,17 @@ android {
 }
 
 dependencies {
-    implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
-
+    //Jetpack
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
-    implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
 
-    //UI
+    //Jetpack UI
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
 
-    // JetpackCompose
+    // Jetpack Compose
     implementation(Deps.JetpackCompose.activity)
     implementation(Deps.JetpackCompose.constraintlayout)
     implementation(Deps.JetpackCompose.navigation)
@@ -118,25 +116,34 @@ dependencies {
     implementation(Deps.JetpackCompose.ui)
     implementation(Deps.JetpackCompose.graphics)
     implementation(Deps.JetpackCompose.toolingPreview)
+    debugImplementation(Deps.JetpackCompose.tooling)
     implementation(Deps.JetpackCompose.material3)
     implementation(Deps.JetpackCompose.materialIconExtended)
-    implementation(Deps.JetpackCompose.tooling)
+    //Image Async
     implementation(Deps.JetpackCompose.coilCompose)
-    implementation(Deps.JetpackCompose.hiltNavigationCompose)
+    implementation(Deps.UI.glide)
+    kapt(Deps.UI.glideCompiler)
 
-    // External Libraries
-    implementation(Deps.Arch.hiltAndroid)
-    kapt(Deps.Arch.hiltCompiler)
+    // Coroutines
     implementation(Deps.Arch.coroutinesCore)
+    implementation(Deps.Arch.coroutinesAndroid)
 
-    // Business Dependencies
-    implementation(Deps.UI.uikit)
+    //Lifecycle Scope
+    implementation(Deps.Arch.lifecycleRuntime)
+    implementation(Deps.Arch.lifecycleViewModel)
+    implementation(Deps.Arch.lifecycleCompose)
+    implementation(Deps.Arch.lifecycleRuntimeCompose)
 
-    //Network Dependencies
-    implementation(Deps.Arch.network)
+    // Dagger - Hilt
+    implementation(Deps.Arch.hiltAndroid)
+    kapt(Deps.Arch.hiltAndroidCompiler)
+    implementation(Deps.JetpackCompose.hiltNavigationCompose)
+    kapt(Deps.Arch.hiltCompiler)
+
+    //Retrofit
     implementation(Deps.Arch.retrofit2)
-    implementation(Deps.Arch.loggingInterceptor)
     implementation(Deps.Arch.gson)
+    implementation(Deps.Arch.loggingInterceptor)
 
     // Test
     testImplementation(Deps.Test.jUnit)
@@ -147,4 +154,8 @@ dependencies {
     testImplementation(Deps.Test.mockitoInline)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
+
+    // Business Dependencies
+    implementation(Deps.UI.uikit)
+    implementation(Deps.Arch.network)
 }
