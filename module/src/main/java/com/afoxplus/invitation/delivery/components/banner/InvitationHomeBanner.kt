@@ -29,7 +29,7 @@ import com.afoxplus.uikit.designsystem.foundations.UIKitColorTheme
 import com.afoxplus.uikit.designsystem.foundations.UIKitTheme
 
 @Composable
-internal fun InvitationHomeBanner(modifier: Modifier = Modifier) {
+fun InvitationHomeBanner(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
