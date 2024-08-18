@@ -3,7 +3,7 @@ package com.afoxplus.invitation.delivery.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.afoxplus.invitation.R
-import com.afoxplus.invitation.delivery.events.GotoRestaurantEvent
+import com.afoxplus.invitation.delivery.events.InvitationToRestaurantEvent
 import com.afoxplus.invitation.delivery.models.StrategyInvitationDetail
 import com.afoxplus.invitation.domain.entities.Invitation
 import com.afoxplus.invitation.domain.repository.InvitationRepository
@@ -76,9 +76,10 @@ internal class InvitationDetailViewModel @Inject constructor(
         viewModelScope.launch(coroutineDispatcher.getMainDispatcher()) {
             val invitation = (mInvitation.value as UIModelState.Success).data
             eventBus.send(
-                GotoRestaurantEvent(
+                InvitationToRestaurantEvent(
                     tableId = invitation.table,
-                    restaurantId = invitation.restaurantId
+                    restaurantId = invitation.restaurantId,
+                    guestName = invitation.guest
                 )
             )
         }
