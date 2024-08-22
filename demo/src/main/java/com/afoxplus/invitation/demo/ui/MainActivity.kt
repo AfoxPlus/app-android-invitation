@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.afoxplus.invitation.delivery.components.banner.InvitationHomeBanner
 import com.afoxplus.invitation.delivery.flows.InvitationFlow
 import com.afoxplus.uikit.designsystem.atoms.UIKitButtonOutlineLarge
 import com.afoxplus.uikit.designsystem.atoms.UIKitText
@@ -39,12 +40,9 @@ class MainActivity : AppCompatActivity() {
                             .padding(paddingValues)
                             .fillMaxSize()
                     ) {
-
-                        invitationFlow.InvitationHomeBannerComponent(
-                            modifier = Modifier.align(
-                                Alignment.TopCenter
-                            )
-                        )
+                        InvitationHomeBanner( modifier = Modifier.align(
+                            Alignment.TopCenter
+                        ))
 
                         Column(
                             modifier = Modifier
